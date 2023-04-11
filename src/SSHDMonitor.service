@@ -1,0 +1,6 @@
+[Unit]
+Description=Logging service for journalctl sshd connections
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/sshd_monitor_service.sh

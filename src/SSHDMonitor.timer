@@ -1,0 +1,9 @@
+[Unit]
+Description=Runs sshd_monitor_service hourly and on boot
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=1w
+
+[Install]
+WantedBy=timers.target
