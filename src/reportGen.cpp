@@ -2,20 +2,18 @@
 
 reportGen::reportGen()
 {
-    MONTH_PATH = "/var/lib/SSHDMonitor/CURRENT_MONTH";
     LAST_RECORD_PATH = "/var/lib/SSHDMonitor/LAST_RECORD";
 }
 
 
-int reportGen::writeLatestRecord()
+void reportGen::writeLatestRecord()
 {
-    return system("journalctl -u sshd | tail -n 1 > /var/lib/SSHDMonitor/LAST_RECORD");
+    system("journalctl -u sshd | tail -n 1 > /var/lib/SSHDMonitor/LAST_RECORD");
 }
 
-string reportGen::readLatestRecord(string path)
+
+string reportGen::readLatestRecord()
 {
-    if(reportGen::writeLatestRecord())
-    {
         string line;
         ifstream lastRecord (LAST_RECORD_PATH);
         if(lastRecord.is_open())
@@ -23,9 +21,18 @@ string reportGen::readLatestRecord(string path)
             getline(lastRecord, line);
             return line;
         }
-    }
-    //If the write command of the last journalctl record fails, exit
-    exit(EXIT_FAILURE);
+        else
+        {
+            cout << "Failed accessing /var/lib/SSHDMonitor/\n\nExiting now...\n";
+            exit(EXIT_FAILURE);
+        }
+}
+
+string reportGen::readCurrentMonth()
+{
+    writeLatestRecord();
+    string currentMonth = getMonthFromString(readLatestRecord());
+    return currentMonth;
 }
 
 void reportGen::generateDailyReport()
@@ -41,5 +48,5 @@ void reportGen::generateWeeklyReport()
 void reportGen::generateMonthlyReport()
 {
     string currentMonth = readCurrentMonth();
-    string latestMonth = readLatestRecord(MONTH_PATH);
+    cout << currentMonth << endl;
 }

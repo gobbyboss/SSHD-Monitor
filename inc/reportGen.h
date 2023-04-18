@@ -9,10 +9,10 @@ class reportGen
         reportGen();
 
         int writeCurrentMonth();
-        int writeLatestRecord();
+        void writeLatestRecord();
 
+        string readLatestRecord();
         string readCurrentMonth();
-        string readLatestRecord(string path);
 
         //Report generation
         void generateDailyReport();
@@ -20,7 +20,6 @@ class reportGen
         void generateMonthlyReport();
 
     private: 
-        string MONTH_PATH;
         string LAST_RECORD_PATH;
    
 };

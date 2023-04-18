@@ -3,4 +3,6 @@
 int main()
 {
     reportGen gen;
+    gen.generateMonthlyReport();
+    return 0;
 }
