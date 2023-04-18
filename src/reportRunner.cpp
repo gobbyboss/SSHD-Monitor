@@ -1,4 +1,4 @@
-#include "reportGen.h"
+#include "../inc/reportGen.h"
 
 int main()
 {

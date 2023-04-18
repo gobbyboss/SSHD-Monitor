@@ -1,4 +1,4 @@
-#include "sshdMonitorHelper.h"
+#include "../inc/sshdMonitorHelper.h"
 int getFileLineCount(string path)
 {
 

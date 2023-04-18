@@ -8,19 +8,19 @@ class reportGen
     public:
         reportGen();
 
+        int writeCurrentMonth();
+        int writeLatestRecord();
+
+        string readCurrentMonth();
+        string readLatestRecord(string path);
+
         //Report generation
         void generateDailyReport();
         void generateWeeklyReport();
         void generateMonthlyReport();
 
-        int writeCurrentMonth();
-        int writeLatestRecord(string path);
-
-        string readCurrentMonth();
-        string readLatestRecord(string path);
-
-
     private: 
         string MONTH_PATH;
+        string LAST_RECORD_PATH;
    
 };
