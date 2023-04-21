@@ -2,7 +2,7 @@
 
 int main()
 {
-    reportGen gen;
+    reportGen gen("ACCEPTED");
     gen.generateMonthlyReport();
     return 0;
 }

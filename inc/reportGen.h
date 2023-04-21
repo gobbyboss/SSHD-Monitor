@@ -6,13 +6,14 @@ using namespace std;
 class reportGen
 {
     public:
-        reportGen();
+        reportGen(string status);
 
         int writeCurrentMonth();
         void writeLatestRecord();
 
         string readLatestRecord();
         string readCurrentMonth();
+        string readCurrentDay();
 
         //Report generation
         void generateDailyReport();
@@ -20,6 +21,5 @@ class reportGen
         void generateMonthlyReport();
 
     private: 
-        string LAST_RECORD_PATH;
-   
+        string LAST_RECORD_PATH, STATUS;
 };
