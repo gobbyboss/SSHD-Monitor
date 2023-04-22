@@ -8,7 +8,6 @@ class reportGen
     public:
         reportGen(string status);
 
-        int writeCurrentMonth();
         void writeLatestRecord();
 
         string readLatestRecord();
@@ -17,7 +16,6 @@ class reportGen
 
         //Report generation
         void generateDailyReport();
-        void generateWeeklyReport();
         void generateMonthlyReport();
 
     private: 

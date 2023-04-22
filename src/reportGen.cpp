@@ -12,7 +12,13 @@ void reportGen::writeLatestRecord()
     system("journalctl -u sshd | tail -n 1 > /var/lib/SSHDMonitor/LAST_RECORD");
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// Description: Reads the latest record in the journalctl sshd log
+// 
+// Parameters:  None.
+// 
+// Returns:     string - line: The record read from the LAST_RECORD file          
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 string reportGen::readLatestRecord()
 {
     string line;
@@ -29,6 +35,13 @@ string reportGen::readLatestRecord()
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// Description: Creates a string to be set to the month from the latest journalctl sshd record
+// 
+// Parameters:  None.
+// 
+// Returns:     string - month: The month read from the latest logged reccord           
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 string reportGen::readCurrentMonth()
 {
     writeLatestRecord();
@@ -37,6 +50,13 @@ string reportGen::readCurrentMonth()
     return month;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// Description: Creates a string to be set to the day from the latest journalctl sshd record
+// 
+// Parameters:  None.
+// 
+// Returns:     They day read from the latest logged reccord         
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 string reportGen::readCurrentDay()
 {
     writeLatestRecord();
@@ -45,20 +65,30 @@ string reportGen::readCurrentDay()
     return day;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// Description: Driver for the daily report 
+// 
+// Parameters:  None.
+// 
+// Returns:     None.         
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 void reportGen::generateDailyReport()
 {
 
 }
 
-void reportGen::generateWeeklyReport()
-{
-
-}
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// Description: Driver for the monthly report 
+// 
+// Parameters:  None.
+// 
+// Returns:     None.         
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 void reportGen::generateMonthlyReport()
 {
     string currentMonth = readCurrentMonth();
-    string day = "";
-    getDayFromString(readLatestRecord(), day);
-    cout << currentMonth << " + " << day << endl;
+    string currentDay = readCurrentDay();
+    string ip = "";
+    getIPFromString("Apr 14 09:47:21 arch sshd[1400468]: Accepted password for rwgoss from 76.130.218.72 port 49601 ssh2", ip);
+    cout << "Success + " << ip << endl;
 }

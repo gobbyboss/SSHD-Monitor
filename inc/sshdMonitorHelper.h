@@ -4,8 +4,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <cctype>
-#include <regex>
 using namespace std;
 
 //Function Prototypes
@@ -15,7 +13,7 @@ int getFileSize(string path);
 void getMonthFromString(string rawString, string &month);
 void getDayFromString(string rawString, string &day);
 string* fileToStringArr(string path);
-string getIPFromString(string rawString, string &ip);
+void getIPFromString(string rawString, string &ip);
 
 
 #endif
