@@ -13,6 +13,7 @@ int getFileSize(string path);
 void getMonthFromString(string rawString, string &month);
 void getDayFromString(string rawString, string &day);
 string* fileToStringArr(string path);
+bool neighborIsDigit(string str, int index);
 void getIPFromString(string rawString, string &ip);
 
 

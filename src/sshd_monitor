@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+tmpdir=/var/lib/sshdmonitor/
+status=("Accepted" "Failed")
+
+if [ -d "$tmpdir" ]
+then
+	journalctl -u sshd > $tmpdir/TMP_DATA
+else
+	mkdir $tmpdir
+	journalctl -u sshd > $tmpdir/TMP_DATA
+fi
+
+for s in ${status[@]}; do
+	grep $s $tmpdir/TMP_DATA > $tmpdir/$s
+done
+
+/home/rwgoss/dev/bin/app.exe

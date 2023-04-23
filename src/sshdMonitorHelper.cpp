@@ -51,10 +51,24 @@ void getDayFromString(string rawString, string &day)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+// Description: Detirmines whether the neighboring characters at a given index in a string are digits
+// 
+// Parameters:  string str     - Any string
+//              int index      - The index in the string to check the neighbors of 
+// 
+// Returns:     true           - If neighbors are digits
+//              false          - If one or two neighbors are not digits           
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+bool neighborIsDigit(string str, int index)
+{
+    return isdigit(str[index - 1]) && isdigit(str[index + 1]);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 // Description: Finds IP in journalctl sshd log string and sets the referenced day variable to it
 // 
 // Parameters:  string rawString - An ACCEPTED or FAILED line as a string from the journalctl sshd log
-//              string &ip    - An empty IP string to be passed by reference
+//              string &ip       - An empty IP string to be passed by reference
 // 
 // Returns:     None. 
 //
@@ -80,7 +94,7 @@ void getIPFromString(string rawString, string &ip)
                 {
                     foundPotentialIP = true;
                 }
-                if(rawString[index] == '.' && isdigit(rawString[index - 1]) && isdigit(rawString[index + 1]))
+                if(rawString[index] == '.' && neighborIsDigit(rawString, index))
                 {
                     numDecimals++;
                 }
@@ -95,6 +109,7 @@ void getIPFromString(string rawString, string &ip)
                     ip += rawString[start];
                     start++;
                 }
+                valid = true;
             }
         }
         index++;

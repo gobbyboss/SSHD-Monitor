@@ -2,14 +2,14 @@
 
 reportGen::reportGen(string status)
 {
-    LAST_RECORD_PATH = "/var/lib/SSHDMonitor/LAST_RECORD";
+    LAST_RECORD_PATH = "/var/lib/sshdmonitor/";
     STATUS = status;
 }
 
 
 void reportGen::writeLatestRecord()
 {
-    system("journalctl -u sshd | tail -n 1 > /var/lib/SSHDMonitor/LAST_RECORD");
+    system("journalctl -u sshd | tail -n 1 > /var/lib/sshdmonitor/LAST_RECORD");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ string reportGen::readLatestRecord()
     }
     else
     {
-        cout << "Failed accessing /var/lib/SSHDMonitor/\n\nExiting now...\n";
+        cout << "Failed accessing /var/lib/sshdmonitor/\n\nExiting now...\n";
         exit(EXIT_FAILURE);
     }
 }
