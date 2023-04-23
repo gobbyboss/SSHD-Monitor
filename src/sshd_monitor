@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
-tmpdir=/var/lib/sshdmonitor/
+cachedir=/var/cache/sshdmonitor/
 status=("Accepted" "Failed")
 
-if [ -d "$tmpdir" ]
+if [ -d "$cachedir" ]
 then
-	journalctl -u sshd > $tmpdir/TMP_DATA
+	journalctl -u sshd > $cachedir/TMP_DATA
 else
-	mkdir $tmpdir
-	journalctl -u sshd > $tmpdir/TMP_DATA
+	mkdir $cachedir
+	journalctl -u sshd > $cachedir/TMP_DATA
 fi
 
 for s in ${status[@]}; do
-	grep $s $tmpdir/TMP_DATA > $tmpdir/$s
+	grep $s $cachedir/TMP_DATA > $cachedir/$s
 done
 
 /home/rwgoss/dev/bin/app.exe
+rm $cachedir/*

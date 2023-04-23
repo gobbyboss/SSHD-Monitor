@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <stack>
 #include "sshdMonitorHelper.h"
 using namespace std;
 
@@ -9,7 +10,7 @@ class reportGen
         reportGen(string status);
 
         void writeLatestRecord();
-
+        void loadStatusFile();
         string readLatestRecord();
         string readCurrentMonth();
         string readCurrentDay();
@@ -19,5 +20,6 @@ class reportGen
         void generateMonthlyReport();
 
     private: 
-        string LAST_RECORD_PATH, STATUS;
+        string RECORD_PATH, STATUS;
+        stack<string> statusdata; 
 };

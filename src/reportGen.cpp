@@ -2,14 +2,20 @@
 
 reportGen::reportGen(string status)
 {
-    LAST_RECORD_PATH = "/var/lib/sshdmonitor/";
+    RECORD_PATH = "/var/cache/sshdmonitor/";
     STATUS = status;
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// Description: Writes the latest journalctl sshd record in the log as a text file
+// 
+// Parameters:  None.
+// 
+// Returns:     None.          
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 void reportGen::writeLatestRecord()
 {
-    system("journalctl -u sshd | tail -n 1 > /var/lib/sshdmonitor/LAST_RECORD");
+    system("journalctl -u sshd | tail -n 1 > /var/cache/sshdmonitor/LAST_RECORD");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,7 +28,7 @@ void reportGen::writeLatestRecord()
 string reportGen::readLatestRecord()
 {
     string line;
-    ifstream lastRecord (LAST_RECORD_PATH);
+    ifstream lastRecord (RECORD_PATH + "LAST_RECORD");
     if(lastRecord.is_open())
     {
         getline(lastRecord, line);
@@ -30,11 +36,36 @@ string reportGen::readLatestRecord()
     }
     else
     {
-        cout << "Failed accessing /var/lib/sshdmonitor/\n\nExiting now...\n";
+        cout << "Failed accessing /var/cache/sshdmonitor/\n\nExiting now...\n";
         exit(EXIT_FAILURE);
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// Description: Loads the appropriate STATUS file in /var/cache/sshdmonitor/ into the statusdata 
+//              member stack 
+// 
+// Parameters:  None.
+// 
+// Returns:     None.          
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+void reportGen::loadStatusFile()
+{
+    string line;
+    ifstream data(RECORD_PATH + STATUS);
+    if(data.is_open())
+    {
+        while(getline(data, line))
+        {
+            statusdata.push(line);
+        }
+    }
+    else
+    {
+        cout << "Failed accessing /var/cache/sshdmonitor/\n\nExiting now...\n";
+        exit(EXIT_FAILURE);
+    }
+}
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Description: Creates a string to be set to the month from the latest journalctl sshd record
 // 
