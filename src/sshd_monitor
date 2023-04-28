@@ -1,18 +1,33 @@
 #!/usr/bin/env bash
 cachedir=/var/cache/sshdmonitor/
+tmpdir=/var/tmp/sshdmonitor/
 status=("Accepted" "Failed")
+dataExtension=_Data
 
-if [ -d "$cachedir" ]
+# Checking for needed files and directories
+if [ ! -d "$tmpdir" ]
 then
-	journalctl -u sshd > $cachedir/TMP_DATA
-else
+	mkdir $tmpdir
+fi
+if [ ! -d "$cachedir" ]
+then
 	mkdir $cachedir
-	journalctl -u sshd > $cachedir/TMP_DATA
 fi
 
 for s in ${status[@]}; do
-	grep $s $cachedir/TMP_DATA > $cachedir/$s
+	datafile=${tmpdir}${s}${dataExtension}
+	echo $datafile
+	if [ ! -f $datafile ]
+	then
+		touch $datafile
+	fi
+done 
+
+# Stage data for processing
+journalctl -u sshd > ${cachedir}TMP_DATA
+
+for s in ${status[@]}; do
+	grep $s ${cachedir}TMP_DATA > ${cachedir}${s}
 done
 
 /home/rwgoss/dev/bin/app.exe
-rm $cachedir/*
